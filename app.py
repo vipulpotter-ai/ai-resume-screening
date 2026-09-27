@@ -2902,9 +2902,12 @@ def admin_jobs():
 # START
 # =========================================================
 
-if __name__ == "__main__":
+# Initialize database when app starts
+# This is required for Render / Gunicorn
+init_db()
 
-    init_db()
+
+if __name__ == "__main__":
 
     app.run(
         debug=True,
