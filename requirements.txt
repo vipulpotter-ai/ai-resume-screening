@@ -1,0 +1,5 @@
+﻿Flask
+pypdf
+Werkzeug
+scikit-learn
+gunicorn
