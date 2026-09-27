@@ -1,0 +1,1218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Candidate Registration | AI Resume Screening</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+
+            min-height: 100vh;
+
+            font-family: "Inter", sans-serif;
+
+            color: white;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            overflow-x: hidden;
+
+            background:
+                radial-gradient(
+                    circle at 15% 20%,
+                    rgba(108,99,255,0.30),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 85% 80%,
+                    rgba(0,212,255,0.22),
+                    transparent 30%
+                ),
+                linear-gradient(
+                    135deg,
+                    #07111f,
+                    #101b35
+                );
+
+            position: relative;
+        }
+
+
+        /* Animated glow */
+
+        body::before,
+        body::after {
+
+            content: "";
+
+            position: absolute;
+
+            width: 360px;
+            height: 360px;
+
+            border-radius: 50%;
+
+            filter: blur(80px);
+
+            opacity: 0.32;
+
+            animation:
+                glowMove 9s
+                ease-in-out infinite
+                alternate;
+        }
+
+        body::before {
+
+            background: #6c63ff;
+
+            top: -150px;
+            left: -100px;
+        }
+
+        body::after {
+
+            background: #00d4ff;
+
+            right: -120px;
+            bottom: -150px;
+
+            animation-delay: 2s;
+        }
+
+
+        @keyframes glowMove {
+
+            from {
+                transform: translate(0,0) scale(1);
+            }
+
+            to {
+                transform: translate(50px,35px) scale(1.15);
+            }
+
+        }
+
+
+        /* Floating particles */
+
+        .particle {
+
+            position: absolute;
+
+            width: 5px;
+            height: 5px;
+
+            border-radius: 50%;
+
+            background: rgba(255,255,255,0.55);
+
+            animation:
+                particleMove
+                linear infinite;
+        }
+
+        .p1 {
+            left: 10%;
+            top: 75%;
+            animation-duration: 7s;
+        }
+
+        .p2 {
+            left: 82%;
+            top: 20%;
+            animation-duration: 9s;
+        }
+
+        .p3 {
+            left: 25%;
+            top: 12%;
+            animation-duration: 6s;
+        }
+
+        .p4 {
+            left: 72%;
+            top: 78%;
+            animation-duration: 8s;
+        }
+
+
+        @keyframes particleMove {
+
+            0% {
+                transform: translateY(0);
+                opacity: 0.15;
+            }
+
+            50% {
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: translateY(-100px);
+                opacity: 0;
+            }
+
+        }
+
+
+        /* Main */
+
+        .container {
+
+            width: 100%;
+
+            max-width: 1050px;
+
+            padding: 25px;
+
+            position: relative;
+
+            z-index: 2;
+        }
+
+
+        .register-card {
+
+            width: 100%;
+
+            min-height: 610px;
+
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            overflow: hidden;
+
+            border-radius: 28px;
+
+            background:
+                rgba(255,255,255,0.09);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.16);
+
+            backdrop-filter: blur(25px);
+
+            -webkit-backdrop-filter: blur(25px);
+
+            box-shadow:
+                0 30px 80px
+                rgba(0,0,0,0.45),
+                inset 0 1px 0
+                rgba(255,255,255,0.08);
+
+            animation:
+                cardEnter 0.8s
+                ease-out;
+        }
+
+
+        @keyframes cardEnter {
+
+            from {
+
+                opacity: 0;
+
+                transform:
+                    translateY(35px)
+                    scale(0.96);
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform:
+                    translateY(0)
+                    scale(1);
+            }
+
+        }
+
+
+        /* Left */
+
+        .info-section {
+
+            padding: 55px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: center;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(108,99,255,0.23),
+                    rgba(0,212,255,0.08)
+                );
+
+            border-right:
+                1px solid
+                rgba(255,255,255,0.10);
+        }
+
+
+        .icon {
+
+            width: 82px;
+            height: 82px;
+
+            border-radius: 24px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            font-size: 38px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(108,99,255,0.95),
+                    rgba(0,212,255,0.75)
+                );
+
+            box-shadow:
+                0 15px 40px
+                rgba(108,99,255,0.35);
+
+            animation:
+                iconFloat 4s
+                ease-in-out infinite;
+
+            margin-bottom: 30px;
+        }
+
+
+        @keyframes iconFloat {
+
+            0%,100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-8px);
+            }
+
+        }
+
+
+        .info-section h1 {
+
+            font-size: 34px;
+
+            line-height: 1.15;
+
+            margin-bottom: 15px;
+
+            font-weight: 800;
+        }
+
+
+        .gradient-text {
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #8d87ff,
+                    #45ddff
+                );
+
+            -webkit-background-clip: text;
+
+            -webkit-text-fill-color: transparent;
+        }
+
+
+        .info-section p {
+
+            color: #aab6cc;
+
+            line-height: 1.7;
+
+            max-width: 390px;
+
+            font-size: 15px;
+        }
+
+
+        /* Benefits */
+
+        .benefits {
+
+            margin-top: 35px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 14px;
+        }
+
+
+        .benefit {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            color: #dce4f5;
+
+            font-size: 14px;
+        }
+
+
+        .benefit-icon {
+
+            width: 30px;
+            height: 30px;
+
+            border-radius: 9px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            background:
+                rgba(108,99,255,0.18);
+
+            border:
+                1px solid
+                rgba(108,99,255,0.25);
+        }
+
+
+        /* Form */
+
+        .form-section {
+
+            padding: 50px 55px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: center;
+        }
+
+
+        .form-header {
+
+            margin-bottom: 25px;
+        }
+
+
+        .small-title {
+
+            color: #8eebff;
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            letter-spacing: 1.5px;
+
+            text-transform: uppercase;
+
+            margin-bottom: 8px;
+        }
+
+
+        .form-header h2 {
+
+            font-size: 30px;
+
+            font-weight: 800;
+
+            margin-bottom: 8px;
+        }
+
+
+        .form-header p {
+
+            color: #aab6cc;
+
+            font-size: 14px;
+        }
+
+
+        /* Error */
+
+        .error {
+
+            padding: 13px 15px;
+
+            border-radius: 12px;
+
+            margin-bottom: 18px;
+
+            background:
+                rgba(255,92,122,0.12);
+
+            border:
+                1px solid
+                rgba(255,92,122,0.30);
+
+            color: #ff9aae;
+
+            font-size: 13px;
+
+            animation:
+                errorShake 0.4s ease;
+        }
+
+
+        @keyframes errorShake {
+
+            0%,100% {
+                transform: translateX(0);
+            }
+
+            25% {
+                transform: translateX(-5px);
+            }
+
+            75% {
+                transform: translateX(5px);
+            }
+
+        }
+
+
+        /* Inputs */
+
+        .input-group {
+
+            margin-bottom: 14px;
+        }
+
+
+        .input-group label {
+
+            display: block;
+
+            margin-bottom: 7px;
+
+            color: #d9e2f3;
+
+            font-size: 12px;
+
+            font-weight: 600;
+        }
+
+
+        .input-wrapper {
+
+            position: relative;
+        }
+
+
+        .input-icon {
+
+            position: absolute;
+
+            left: 15px;
+
+            top: 50%;
+
+            transform:
+                translateY(-50%);
+
+            opacity: 0.65;
+
+            font-size: 16px;
+
+            pointer-events: none;
+        }
+
+
+        input {
+
+            width: 100%;
+
+            height: 50px;
+
+            padding:
+                0 15px
+                0 45px;
+
+            border:
+                1px solid
+                rgba(255,255,255,0.12);
+
+            border-radius: 13px;
+
+            outline: none;
+
+            background:
+                rgba(0,0,0,0.18);
+
+            color: white;
+
+            font-family: inherit;
+
+            font-size: 13px;
+
+            transition:
+                all 0.25s ease;
+        }
+
+
+        input::placeholder {
+
+            color: #77849a;
+        }
+
+
+        input:focus {
+
+            border-color:
+                rgba(108,99,255,0.9);
+
+            background:
+                rgba(0,0,0,0.25);
+
+            box-shadow:
+                0 0 0 4px
+                rgba(108,99,255,0.12);
+        }
+
+
+        /* Password toggle */
+
+        .password-toggle {
+
+            position: absolute;
+
+            right: 12px;
+
+            top: 50%;
+
+            transform:
+                translateY(-50%);
+
+            width: auto;
+            height: auto;
+
+            padding: 5px;
+
+            border: none;
+
+            background: transparent;
+
+            color: #8290a8;
+
+            cursor: pointer;
+
+            font-size: 16px;
+        }
+
+
+        .password-toggle:hover {
+
+            color: white;
+
+            background: transparent;
+
+            box-shadow: none;
+
+            transform:
+                translateY(-50%);
+        }
+
+
+        /* Register button */
+
+        .register-btn {
+
+            width: 100%;
+
+            height: 52px;
+
+            margin-top: 6px;
+
+            border: none;
+
+            border-radius: 14px;
+
+            color: white;
+
+            font-family: inherit;
+
+            font-size: 14px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #6c63ff,
+                    #00bfe8
+                );
+
+            box-shadow:
+                0 12px 30px
+                rgba(76,96,255,0.30);
+
+            transition:
+                all 0.25s ease;
+        }
+
+
+        .register-btn:hover {
+
+            transform:
+                translateY(-3px);
+
+            box-shadow:
+                0 18px 35px
+                rgba(76,96,255,0.42);
+        }
+
+
+        .register-btn:active {
+
+            transform:
+                translateY(-1px)
+                scale(0.99);
+        }
+
+
+        /* Login link */
+
+        .login-link {
+
+            margin-top: 20px;
+
+            padding-top: 18px;
+
+            border-top:
+                1px solid
+                rgba(255,255,255,0.08);
+
+            text-align: center;
+
+            color: #8794aa;
+
+            font-size: 12px;
+
+            line-height: 1.7;
+        }
+
+
+        .login-link a {
+
+            display: inline-block;
+
+            margin-top: 4px;
+
+            color: #72ddff;
+
+            text-decoration: none;
+
+            font-weight: 700;
+
+            transition:
+                all 0.2s ease;
+        }
+
+
+        .login-link a:hover {
+
+            color: white;
+
+            transform:
+                translateY(-1px);
+        }
+
+
+        .security-note {
+
+            margin-top: 15px;
+
+            text-align: center;
+
+            color: #718096;
+
+            font-size: 10px;
+        }
+
+
+        .security-note span {
+
+            color: #8eebff;
+        }
+
+
+        /* Mobile */
+
+        @media (max-width: 800px) {
+
+            body {
+                overflow-y: auto;
+            }
+
+            .container {
+                padding: 18px;
+            }
+
+            .register-card {
+
+                grid-template-columns: 1fr;
+
+                min-height: auto;
+            }
+
+            .info-section {
+
+                padding: 35px 30px;
+
+                border-right: none;
+
+                border-bottom:
+                    1px solid
+                    rgba(255,255,255,0.10);
+            }
+
+            .info-section h1 {
+                font-size: 27px;
+            }
+
+            .benefits {
+                margin-top: 22px;
+            }
+
+            .form-section {
+                padding: 35px 30px;
+            }
+
+            .form-header h2 {
+                font-size: 27px;
+            }
+
+        }
+
+
+        @media (max-width: 450px) {
+
+            .container {
+                padding: 12px;
+            }
+
+            .register-card {
+                border-radius: 22px;
+            }
+
+            .info-section,
+            .form-section {
+                padding: 28px 22px;
+            }
+
+            .icon {
+
+                width: 68px;
+                height: 68px;
+
+                font-size: 31px;
+            }
+
+            .info-section h1 {
+                font-size: 24px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- Animated particles -->
+
+    <div class="particle p1"></div>
+    <div class="particle p2"></div>
+    <div class="particle p3"></div>
+    <div class="particle p4"></div>
+
+
+    <div class="container">
+
+        <div class="register-card">
+
+
+            <!-- Left information section -->
+
+            <div class="info-section">
+
+                <div class="icon">
+                    🚀
+                </div>
+
+
+                <h1>
+
+                    Start Your<br>
+
+                    <span class="gradient-text">
+                        Career Journey
+                    </span>
+
+                </h1>
+
+
+                <p>
+
+                    Create your candidate account and
+                    explore job opportunities from
+                    registered companies and HRs.
+
+                </p>
+
+
+                <div class="benefits">
+
+
+                    <div class="benefit">
+
+                        <div class="benefit-icon">
+                            💼
+                        </div>
+
+                        <span>
+                            Explore available jobs
+                        </span>
+
+                    </div>
+
+
+                    <div class="benefit">
+
+                        <div class="benefit-icon">
+                            📄
+                        </div>
+
+                        <span>
+                            Apply with your resume
+                        </span>
+
+                    </div>
+
+
+                    <div class="benefit">
+
+                        <div class="benefit-icon">
+                            🤖
+                        </div>
+
+                        <span>
+                            AI-powered skill matching
+                        </span>
+
+                    </div>
+
+
+                    <div class="benefit">
+
+                        <div class="benefit-icon">
+                            🔔
+                        </div>
+
+                        <span>
+                            Track application status
+                        </span>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- Registration form -->
+
+            <div class="form-section">
+
+
+                <div class="form-header">
+
+                    <div class="small-title">
+                        Candidate Portal
+                    </div>
+
+
+                    <h2>
+                        Create Account ✨
+                    </h2>
+
+
+                    <p>
+                        Register to start applying for jobs.
+                    </p>
+
+                </div>
+
+
+                {% if error %}
+
+                    <div class="error">
+
+                        ⚠️ {{ error }}
+
+                    </div>
+
+                {% endif %}
+
+
+                <form method="POST">
+
+
+                    <!-- Name -->
+
+                    <div class="input-group">
+
+                        <label>
+                            Full Name
+                        </label>
+
+
+                        <div class="input-wrapper">
+
+                            <span class="input-icon">
+                                👤
+                            </span>
+
+
+                            <input
+                                type="text"
+                                name="name"
+                                placeholder="Enter your full name"
+                                autocomplete="name"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Mobile -->
+
+                    <div class="input-group">
+
+                        <label>
+                            Mobile Number
+                        </label>
+
+
+                        <div class="input-wrapper">
+
+                            <span class="input-icon">
+                                📱
+                            </span>
+
+
+                            <input
+                                type="tel"
+                                name="mobile"
+                                placeholder="Enter 10-digit mobile number"
+                                pattern="[0-9]{10}"
+                                maxlength="10"
+                                inputmode="numeric"
+                                autocomplete="tel"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Email -->
+
+                    <div class="input-group">
+
+                        <label>
+                            Email Address
+                        </label>
+
+
+                        <div class="input-wrapper">
+
+                            <span class="input-icon">
+                                ✉️
+                            </span>
+
+
+                            <input
+                                type="email"
+                                name="email"
+                                placeholder="Enter your email address"
+                                autocomplete="email"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Password -->
+
+                    <div class="input-group">
+
+                        <label>
+                            Create Password
+                        </label>
+
+
+                        <div class="input-wrapper">
+
+                            <span class="input-icon">
+                                🔒
+                            </span>
+
+
+                            <input
+                                id="password"
+                                type="password"
+                                name="password"
+                                placeholder="Minimum 6 characters"
+                                minlength="6"
+                                autocomplete="new-password"
+                                required
+                            >
+
+
+                            <button
+                                type="button"
+                                class="password-toggle"
+                                onclick="togglePassword()"
+                                aria-label="Show password">
+
+                                👁️
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="register-btn">
+
+                        Create Candidate Account →
+
+                    </button>
+
+
+                </form>
+
+
+                <div class="login-link">
+
+                    Already have an account?
+
+                    <br>
+
+                    <a href="/candidate/login">
+                        ← Login to Candidate Portal
+                    </a>
+
+                </div>
+
+
+                <div class="security-note">
+
+                    🔒
+                    <span>Your information is securely stored</span>
+                    • AI Resume Screening System
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        function togglePassword() {
+
+            const password =
+                document.getElementById("password");
+
+            const button =
+                document.querySelector(".password-toggle");
+
+
+            if (password.type === "password") {
+
+                password.type = "text";
+
+                button.textContent = "🙈";
+
+                button.setAttribute(
+                    "aria-label",
+                    "Hide password"
+                );
+
+            } else {
+
+                password.type = "password";
+
+                button.textContent = "👁️";
+
+                button.setAttribute(
+                    "aria-label",
+                    "Show password"
+                );
+
+            }
+
+        }
+
+    </script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Applications - {{ job["title"] }}</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+        .page {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .top-info {
+            background: white;
+            padding: 22px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+        }
+
+        .top-info h1 {
+            margin-bottom: 8px;
+        }
+
+        .hr-info {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .application-card {
+            background: white;
+            border-radius: 14px;
+            padding: 22px;
+            margin-bottom: 20px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+        }
+
+        .application-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .candidate-name {
+            font-size: 21px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .candidate-info {
+            color: #666;
+            line-height: 1.7;
+        }
+
+        .score-box {
+            min-width: 130px;
+            text-align: center;
+            padding: 15px;
+            border-radius: 10px;
+            background: #f3f7ff;
+        }
+
+        .score-number {
+            font-size: 28px;
+            font-weight: 700;
+            color: #2563eb;
+        }
+
+        .score-label {
+            font-size: 13px;
+            color: #666;
+        }
+
+        .details {
+            margin-top: 20px;
+            border-top: 1px solid #eee;
+            padding-top: 18px;
+        }
+
+        .details h4 {
+            margin-bottom: 8px;
+        }
+
+        .skills {
+            margin-bottom: 15px;
+        }
+
+        .skill {
+            display: inline-block;
+            padding: 6px 10px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 13px;
+        }
+
+        .matched {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .missing {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 7px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        .status-selected {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .status-rejected {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .status-review {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .actions {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            display: inline-block;
+            padding: 10px 17px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
+            border: none;
+        }
+
+        .select-btn {
+            background: #16a34a;
+        }
+
+        .reject-btn {
+            background: #dc2626;
+        }
+
+        .review-btn {
+            background: #d97706;
+        }
+
+        .resume-btn {
+            background: #2563eb;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-bottom: 20px;
+            text-decoration: none;
+            color: #2563eb;
+            font-weight: 600;
+        }
+
+        .empty {
+            background: white;
+            padding: 40px;
+            text-align: center;
+            border-radius: 12px;
+            color: #666;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="navbar">
+
+    <h2>AI Resume Screening</h2>
+
+    <div>
+        <span style="margin-right:20px;">
+            {{ hr_name }} ({{ hr_id }})
+        </span>
+
+        <a href="{{ url_for('dashboard') }}">
+            Dashboard
+        </a>
+
+        &nbsp;&nbsp;
+
+        <a href="{{ url_for('logout') }}">
+            Logout
+        </a>
+    </div>
+
+</div>
+
+
+<div class="page">
+
+    <a class="back-btn"
+       href="{{ url_for('dashboard') }}">
+        ← Back to Dashboard
+    </a>
+
+
+    <div class="top-info">
+
+        <h1>
+            Applications
+        </h1>
+
+        <h3>
+            Job: {{ job["title"] }}
+        </h3>
+
+        <p>
+            {{ job["description"] }}
+        </p>
+
+        <div class="hr-info">
+            HR: {{ hr_name }} | HR ID: {{ hr_id }}
+        </div>
+
+    </div>
+
+
+    {% if applications %}
+
+        {% for application in applications %}
+
+        <div class="application-card">
+
+            <div class="application-header">
+
+                <div>
+
+                    <div class="candidate-name">
+                        {{ application["candidate_name"] or "Candidate" }}
+                    </div>
+
+                    <div class="candidate-info">
+
+                        {% if application["candidate_email"] %}
+                            📧 {{ application["candidate_email"] }}<br>
+                        {% endif %}
+
+                        {% if application["candidate_mobile"] %}
+                            📱 {{ application["candidate_mobile"] }}
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+
+                <div class="score-box">
+
+                    <div class="score-number">
+
+                        {% if application["ai_score"] is not none %}
+                            {{ "%.1f"|format(application["ai_score"]|float) }}%
+                        {% else %}
+                            0%
+                        {% endif %}
+
+                    </div>
+
+                    <div class="score-label">
+                        AI Match
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="details">
+
+                <h4>
+                    Matched Skills
+                </h4>
+
+                <div class="skills">
+
+                    {% if application["matched_skills"] %}
+
+                        {% for skill in application["matched_skills"].split(",") %}
+
+                            {% if skill.strip() %}
+
+                                <span class="skill matched">
+                                    {{ skill.strip() }}
+                                </span>
+
+                            {% endif %}
+
+                        {% endfor %}
+
+                    {% else %}
+
+                        <span style="color:#777;">
+                            No matched skills
+                        </span>
+
+                    {% endif %}
+
+                </div>
+
+
+                <h4>
+                    Missing Skills
+                </h4>
+
+                <div class="skills">
+
+                    {% if application["missing_skills"] %}
+
+                        {% for skill in application["missing_skills"].split(",") %}
+
+                            {% if skill.strip() %}
+
+                                <span class="skill missing">
+                                    {{ skill.strip() }}
+                                </span>
+
+                            {% endif %}
+
+                        {% endfor %}
+
+                    {% else %}
+
+                        <span style="color:#777;">
+                            No missing skills
+                        </span>
+
+                    {% endif %}
+
+                </div>
+
+
+                {% set status = (application["status"] or "Under Review")|lower %}
+
+                {% if status in ["selected", "shortlisted"] %}
+
+                    <span class="status status-selected">
+                        ✓ Selected
+                    </span>
+
+                {% elif status in ["not selected", "rejected", "not matching", "not_matched"] %}
+
+                    <span class="status status-rejected">
+                        ✕ Not Selected
+                    </span>
+
+                {% else %}
+
+                    <span class="status status-review">
+                        ⏳ Under Review
+                    </span>
+
+                {% endif %}
+
+
+                <div class="actions">
+
+                    {% if application["resume"] %}
+
+                        <a class="action-btn resume-btn"
+                           href="{{ url_for('static', filename='uploads/' + application['resume']) }}"
+                           target="_blank">
+
+                            📄 View Resume
+
+                        </a>
+
+                    {% elif application["filename"] %}
+
+                        <a class="action-btn resume-btn"
+                           href="{{ url_for('static', filename='uploads/' + application['filename']) }}"
+                           target="_blank">
+
+                            📄 View Resume
+
+                        </a>
+
+                    {% endif %}
+
+
+                    <a class="action-btn select-btn"
+                       href="{{ url_for('hr_application_action', application_id=application['id'], action='select') }}">
+
+                        ✓ Select
+
+                    </a>
+
+
+                    <a class="action-btn reject-btn"
+                       href="{{ url_for('hr_application_action', application_id=application['id'], action='reject') }}">
+
+                        ✕ Reject
+
+                    </a>
+
+
+                    <a class="action-btn review-btn"
+                       href="{{ url_for('hr_application_action', application_id=application['id'], action='review') }}">
+
+                        ⏳ Review
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    {% else %}
+
+        <div class="empty">
+
+            <h2>No Applications Yet</h2>
+
+            <p>
+                No candidate has applied for this job yet.
+            </p>
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+</body>
+
+</html>

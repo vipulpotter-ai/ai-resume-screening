@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Apply for Job</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="navbar">
+
+    <h2>AI Resume Screening</h2>
+
+    <div>
+
+        <a href="/candidate/dashboard">
+            Dashboard
+        </a>
+
+        &nbsp;&nbsp;
+
+        <a href="/candidate/logout">
+            Logout
+        </a>
+
+    </div>
+
+</div>
+
+
+<div class="form-container">
+
+    <h1>Apply for Job</h1>
+
+
+    <div class="job-card">
+
+        <div>
+
+            <h2>
+                {{ job["title"] }}
+            </h2>
+
+            <p>
+                {{ job["description"] }}
+            </p>
+
+        </div>
+
+    </div>
+
+
+    {% if error %}
+
+        <div class="error">
+            {{ error }}
+        </div>
+
+    {% endif %}
+
+
+    <form method="POST"
+          enctype="multipart/form-data">
+
+
+        <label>
+            Upload Your Resume
+        </label>
+
+
+        <input
+            type="file"
+            name="resume"
+            accept=".pdf"
+            required>
+
+
+        <p class="demo">
+            Only PDF resume is allowed.
+        </p>
+
+
+        <button type="submit">
+            Apply Now
+        </button>
+
+
+    </form>
+
+
+    <br>
+
+
+    <a href="/candidate/dashboard">
+        ← Back to Jobs
+    </a>
+
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Screening Results</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="navbar">
+
+    <h2>AI Resume Screening</h2>
+
+    <a href="/dashboard">
+        Dashboard
+    </a>
+
+</div>
+
+
+<div class="dashboard">
+
+    <h1>{{ job["title"] }}</h1>
+
+    <p>
+        {{ job["description"] }}
+    </p>
+
+
+    <div class="upload-box">
+
+        <h2>Upload Multiple Resumes</h2>
+
+        <p>
+            You can select multiple PDF resumes together.
+        </p>
+
+        <form
+            action="/screen/{{ job['id'] }}"
+            method="POST"
+            enctype="multipart/form-data">
+
+            <input
+                type="file"
+                name="resumes"
+                accept=".pdf"
+                multiple
+                required>
+
+            <br><br>
+
+            <button type="submit">
+                Start AI Screening
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <h2>
+        Candidate Results
+    </h2>
+
+
+    {% if candidates %}
+
+    <div class="table-container">
+
+        <table>
+
+            <tr>
+
+                <th>Rank</th>
+                <th>Candidate</th>
+                <th>Match</th>
+                <th>Matched Skills</th>
+                <th>Missing Skills</th>
+                <th>Status</th>
+
+            </tr>
+
+
+            {% for candidate in candidates %}
+
+            <tr>
+
+                <td>
+                    {{ loop.index }}
+                </td>
+
+                <td>
+                    <b>
+                        {{ candidate["name"] }}
+                    </b>
+                    <br>
+                    <small>
+                        {{ candidate["filename"] }}
+                    </small>
+                </td>
+
+                <td>
+
+                    <div class="score">
+
+                        {{ candidate["match_percentage"] }}%
+
+                    </div>
+
+                </td>
+
+                <td>
+                    {{ candidate["matched_skills"] or "None" }}
+                </td>
+
+                <td>
+                    {{ candidate["missing_skills"] or "None" }}
+                </td>
+
+                <td>
+
+                    {% if candidate["status"] == "Shortlisted" %}
+
+                        <span class="status green-text">
+                            Shortlisted
+                        </span>
+
+                    {% elif candidate["status"] == "Review" %}
+
+                        <span class="status yellow-text">
+                            Review
+                        </span>
+
+                    {% else %}
+
+                        <span class="status red-text">
+                            Not Matching
+                        </span>
+
+                    {% endif %}
+
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </table>
+
+    </div>
+
+    {% else %}
+
+        <div class="empty">
+            No resumes screened yet.
+        </div>
+
+    {% endif %}
+
+</div>
+
+</body>
+
+</html>

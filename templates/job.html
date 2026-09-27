@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Create Job</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="navbar">
+
+    <h2>AI Resume Screening</h2>
+
+    <a href="/dashboard">
+        Dashboard
+    </a>
+
+</div>
+
+
+<div class="form-container">
+
+    <h1>Create Job</h1>
+
+    <form method="POST">
+
+        <label>
+            Job Title
+        </label>
+
+        <input
+            type="text"
+            name="title"
+            placeholder="Example: Python Developer"
+            required>
+
+
+        <label>
+            Required Skills / Job Description
+        </label>
+
+        <textarea
+            name="description"
+            rows="10"
+            placeholder="Python
+SQL
+Flask
+Machine Learning"
+            required></textarea>
+
+
+        <button type="submit">
+            Create Job
+        </button>
+
+    </form>
+
+</div>
+
+</body>
+
+</html>

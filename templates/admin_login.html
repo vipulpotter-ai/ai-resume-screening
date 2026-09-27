@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Login | AI Resume Screening</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg1: #07111f;
+            --bg2: #101b35;
+            --card: rgba(255, 255, 255, 0.09);
+            --border: rgba(255, 255, 255, 0.16);
+            --text: #ffffff;
+            --muted: #aab6cc;
+            --accent: #6c63ff;
+            --accent2: #00d4ff;
+            --danger: #ff5c7a;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: "Inter", sans-serif;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background:
+                radial-gradient(circle at 15% 20%, rgba(108, 99, 255, 0.30), transparent 30%),
+                radial-gradient(circle at 85% 80%, rgba(0, 212, 255, 0.22), transparent 30%),
+                linear-gradient(135deg, var(--bg1), var(--bg2));
+            position: relative;
+        }
+
+        /* Animated background glow */
+        body::before,
+        body::after {
+            content: "";
+            position: absolute;
+            width: 350px;
+            height: 350px;
+            border-radius: 50%;
+            filter: blur(70px);
+            opacity: 0.35;
+            animation: floatGlow 8s ease-in-out infinite alternate;
+        }
+
+        body::before {
+            background: #6c63ff;
+            top: -120px;
+            left: -100px;
+        }
+
+        body::after {
+            background: #00d4ff;
+            right: -120px;
+            bottom: -130px;
+            animation-delay: 2s;
+        }
+
+        @keyframes floatGlow {
+            from {
+                transform: translate(0, 0) scale(1);
+            }
+            to {
+                transform: translate(50px, 30px) scale(1.15);
+            }
+        }
+
+        /* Floating particles */
+        .particle {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background: rgba(255,255,255,0.5);
+            border-radius: 50%;
+            animation: particleMove linear infinite;
+        }
+
+        .p1 {
+            left: 12%;
+            top: 75%;
+            animation-duration: 7s;
+        }
+
+        .p2 {
+            left: 80%;
+            top: 20%;
+            animation-duration: 9s;
+        }
+
+        .p3 {
+            left: 25%;
+            top: 15%;
+            animation-duration: 6s;
+        }
+
+        .p4 {
+            left: 70%;
+            top: 75%;
+            animation-duration: 8s;
+        }
+
+        @keyframes particleMove {
+            0% {
+                transform: translateY(0);
+                opacity: 0.2;
+            }
+
+            50% {
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: translateY(-100px);
+                opacity: 0;
+            }
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 1050px;
+            padding: 25px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .login-box {
+            width: 100%;
+            min-height: 570px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            overflow: hidden;
+
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 28px;
+
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+
+            box-shadow:
+                0 30px 80px rgba(0, 0, 0, 0.45),
+                inset 0 1px 0 rgba(255,255,255,0.08);
+
+            animation: cardEnter 0.8s ease-out;
+        }
+
+        @keyframes cardEnter {
+            from {
+                opacity: 0;
+                transform: translateY(35px) scale(0.96);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Left branding section */
+        .brand-section {
+            padding: 55px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(108, 99, 255, 0.23),
+                    rgba(0, 212, 255, 0.08)
+                );
+            border-right: 1px solid rgba(255,255,255,0.10);
+        }
+
+        .brand-icon {
+            width: 82px;
+            height: 82px;
+            border-radius: 24px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 38px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(108,99,255,0.95),
+                    rgba(0,212,255,0.75)
+                );
+
+            box-shadow:
+                0 15px 40px rgba(108,99,255,0.35);
+
+            animation: iconFloat 4s ease-in-out infinite;
+            margin-bottom: 30px;
+        }
+
+        @keyframes iconFloat {
+            0%, 100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-8px);
+            }
+        }
+
+        .brand-section h2 {
+            font-size: 34px;
+            line-height: 1.15;
+            margin-bottom: 15px;
+            font-weight: 800;
+        }
+
+        .brand-section h2 span {
+            background: linear-gradient(
+                90deg,
+                #8d87ff,
+                #45ddff
+            );
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .brand-section p {
+            color: var(--muted);
+            line-height: 1.7;
+            max-width: 390px;
+            font-size: 15px;
+        }
+
+        .features {
+            margin-top: 35px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #dce4f5;
+            font-size: 14px;
+        }
+
+        .feature-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 9px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: rgba(108,99,255,0.18);
+            border: 1px solid rgba(108,99,255,0.25);
+        }
+
+        /* Login section */
+        .form-section {
+            padding: 55px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .form-header {
+            margin-bottom: 32px;
+        }
+
+        .form-header .small-title {
+            color: #8eebff;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 9px;
+        }
+
+        .form-header h1 {
+            font-size: 31px;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .form-header p {
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .error {
+            padding: 13px 15px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+
+            background: rgba(255, 92, 122, 0.12);
+            border: 1px solid rgba(255, 92, 122, 0.30);
+            color: #ff9aae;
+
+            font-size: 13px;
+            animation: errorShake 0.4s ease;
+        }
+
+        @keyframes errorShake {
+            0%, 100% {
+                transform: translateX(0);
+            }
+
+            25% {
+                transform: translateX(-5px);
+            }
+
+            75% {
+                transform: translateX(5px);
+            }
+        }
+
+        .input-group {
+            margin-bottom: 18px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #d9e2f3;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0.65;
+            font-size: 17px;
+            pointer-events: none;
+        }
+
+        input {
+            width: 100%;
+            height: 54px;
+            padding: 0 16px 0 47px;
+
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 14px;
+
+            outline: none;
+
+            background: rgba(0,0,0,0.18);
+            color: white;
+
+            font-family: inherit;
+            font-size: 14px;
+
+            transition: all 0.25s ease;
+        }
+
+        input::placeholder {
+            color: #77849a;
+        }
+
+        input:focus {
+            border-color: rgba(108,99,255,0.9);
+            background: rgba(0,0,0,0.25);
+
+            box-shadow:
+                0 0 0 4px rgba(108,99,255,0.12),
+                0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        button {
+            width: 100%;
+            height: 54px;
+            margin-top: 8px;
+
+            border: none;
+            border-radius: 14px;
+
+            color: white;
+            font-family: inherit;
+            font-size: 15px;
+            font-weight: 700;
+
+            cursor: pointer;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #6c63ff,
+                    #00bfe8
+                );
+
+            box-shadow:
+                0 12px 30px rgba(76, 96, 255, 0.30);
+
+            transition: all 0.25s ease;
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow:
+                0 18px 35px rgba(76, 96, 255, 0.42);
+        }
+
+        button:active {
+            transform: translateY(-1px) scale(0.99);
+        }
+
+        .security-note {
+            margin-top: 25px;
+            text-align: center;
+            color: #718096;
+            font-size: 11px;
+        }
+
+        .security-note span {
+            color: #8eebff;
+        }
+
+        /* Mobile */
+        @media (max-width: 800px) {
+
+            body {
+                overflow-y: auto;
+            }
+
+            .login-container {
+                padding: 18px;
+            }
+
+            .login-box {
+                grid-template-columns: 1fr;
+                min-height: auto;
+            }
+
+            .brand-section {
+                padding: 35px 30px;
+                border-right: none;
+                border-bottom: 1px solid rgba(255,255,255,0.10);
+            }
+
+            .brand-section h2 {
+                font-size: 27px;
+            }
+
+            .features {
+                margin-top: 22px;
+            }
+
+            .form-section {
+                padding: 35px 30px;
+            }
+
+            .form-header h1 {
+                font-size: 27px;
+            }
+        }
+
+        @media (max-width: 450px) {
+
+            .login-container {
+                padding: 12px;
+            }
+
+            .login-box {
+                border-radius: 22px;
+            }
+
+            .brand-section,
+            .form-section {
+                padding: 28px 22px;
+            }
+
+            .brand-icon {
+                width: 68px;
+                height: 68px;
+                font-size: 31px;
+            }
+
+            .brand-section h2 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Animated particles -->
+    <div class="particle p1"></div>
+    <div class="particle p2"></div>
+    <div class="particle p3"></div>
+    <div class="particle p4"></div>
+
+    <div class="login-container">
+
+        <div class="login-box">
+
+            <!-- Branding -->
+            <div class="brand-section">
+
+                <div class="brand-icon">
+                    🛡️
+                </div>
+
+                <h2>
+                    AI Resume<br>
+                    <span>Screening System</span>
+                </h2>
+
+                <p>
+                    Smart resume screening and skill matching
+                    platform powered by AI and NLP technology.
+                </p>
+
+                <div class="features">
+
+                    <div class="feature">
+                        <div class="feature-icon">🤖</div>
+                        <span>AI-powered resume screening</span>
+                    </div>
+
+                    <div class="feature">
+                        <div class="feature-icon">🔐</div>
+                        <span>Secure administrator access</span>
+                    </div>
+
+                    <div class="feature">
+                        <div class="feature-icon">📊</div>
+                        <span>Real-time recruitment analytics</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Login Form -->
+            <div class="form-section">
+
+                <div class="form-header">
+
+                    <div class="small-title">
+                        Administrator Portal
+                    </div>
+
+                    <h1>Welcome Back 👋</h1>
+
+                    <p>
+                        Sign in to manage your recruitment system.
+                    </p>
+
+                </div>
+
+                {% if error %}
+
+                    <div class="error">
+                        ⚠️ {{ error }}
+                    </div>
+
+                {% endif %}
+
+                <form method="POST">
+
+                    <div class="input-group">
+
+                        <label>Admin Username</label>
+
+                        <div class="input-wrapper">
+
+                            <span class="input-icon">👤</span>
+
+                            <input
+                                type="text"
+                                name="username"
+                                placeholder="Enter admin username"
+                                autocomplete="username"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+                    <div class="input-group">
+
+                        <label>Admin Password</label>
+
+                        <div class="input-wrapper">
+
+                            <span class="input-icon">🔒</span>
+
+                            <input
+                                type="password"
+                                name="password"
+                                placeholder="Enter admin password"
+                                autocomplete="current-password"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+                    <button type="submit">
+                        Sign In → 
+                    </button>
+
+                </form>
+
+                <div class="security-note">
+                    🔒 <span>Secure Login</span> • AI Resume Screening System
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

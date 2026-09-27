@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Job Applications</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="navbar">
+
+    <h2>AI Resume Screening</h2>
+
+    <div>
+
+        <a href="/dashboard">
+            Dashboard
+        </a>
+
+        &nbsp;&nbsp;
+
+        <a href="/logout">
+            Logout
+        </a>
+
+    </div>
+
+</div>
+
+
+<div class="dashboard">
+
+    <h1>{{ job["title"] }} - Applications</h1>
+
+    <p>
+        Required Skills:
+        {{ job["description"] }}
+    </p>
+
+
+    {% if applications %}
+
+    <div class="table-container">
+
+        <table>
+
+            <tr>
+
+                <th>Candidate</th>
+
+                <th>Mobile</th>
+
+                <th>Email</th>
+
+                <th>AI Match</th>
+
+                <th>Matched Skills</th>
+
+                <th>Missing Skills</th>
+
+                <th>Status</th>
+
+                <th>Action</th>
+
+            </tr>
+
+
+            {% for application in applications %}
+
+            <tr>
+
+                <td>
+
+                    <b>
+                        {{ application["candidate_name"] }}
+                    </b>
+
+                    <br>
+
+                    <small>
+                        {{ application["filename"] }}
+                    </small>
+
+                </td>
+
+
+                <td>
+                    {{ application["mobile"] }}
+                </td>
+
+
+                <td>
+                    {{ application["email"] }}
+                </td>
+
+
+                <td>
+
+                    <div class="score">
+
+                        {{ application["match_percentage"] }}%
+
+                    </div>
+
+                </td>
+
+
+                <td>
+
+                    {{ application["matched_skills"] or "None" }}
+
+                </td>
+
+
+                <td>
+
+                    {{ application["missing_skills"] or "None" }}
+
+                </td>
+
+
+                <td>
+
+                    {% if application["status"] == "Selected" %}
+
+                        <span class="status green-text">
+                            Selected
+                        </span>
+
+                    {% elif application["status"] == "Not Selected" %}
+
+                        <span class="status red-text">
+                            Not Selected
+                        </span>
+
+                    {% else %}
+
+                        <span class="status yellow-text">
+                            Under Review
+                        </span>
+
+                    {% endif %}
+
+                </td>
+
+
+                <td>
+
+                    {% if application["status"] == "Under Review" %}
+
+                        <a class="button"
+                           href="/hr/application/{{ application['id'] }}/select">
+
+                            Select
+
+                        </a>
+
+                        <br><br>
+
+                        <a class="button"
+                           href="/hr/application/{{ application['id'] }}/reject">
+
+                            Reject
+
+                        </a>
+
+                    {% else %}
+
+                        Decision Made
+
+                    {% endif %}
+
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </table>
+
+    </div>
+
+    {% else %}
+
+        <div class="empty">
+
+            No applications received for this job yet.
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+</body>
+
+</html>

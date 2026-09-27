@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>HR Dashboard | AI Resume Screening</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f7fb;
+    color: #172033;
+    transition: .3s;
+}
+
+body.dark {
+    background: #0f172a;
+    color: #e5e7eb;
+}
+
+.navbar {
+    background: linear-gradient(135deg,#111827,#1d4ed8);
+    color: white;
+    padding: 16px 30px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    box-shadow: 0 5px 20px rgba(0,0,0,.18);
+}
+
+.logo {
+    font-size: 21px;
+    font-weight: bold;
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn {
+    padding: 10px 15px;
+    border-radius: 10px;
+    border: none;
+    text-decoration: none;
+    font-weight: bold;
+    cursor: pointer;
+    transition: .25s;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+}
+
+.dark-btn {
+    background: rgba(255,255,255,.15);
+    color: white;
+}
+
+.logout {
+    background: #ef4444;
+    color: white;
+}
+
+.container {
+    max-width: 1250px;
+    margin: auto;
+    padding: 30px;
+}
+
+.welcome {
+    margin-bottom: 25px;
+    animation: fadeDown .6s ease;
+}
+
+.welcome h1 {
+    font-size: 30px;
+    margin-bottom: 8px;
+}
+
+.muted {
+    color: #64748b;
+}
+
+body.dark .muted {
+    color: #94a3b8;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 18px;
+    margin-bottom: 30px;
+}
+
+.stat {
+    background: white;
+    border-radius: 18px;
+    padding: 23px;
+
+    box-shadow: 0 8px 25px rgba(15,23,42,.08);
+
+    transition: .3s;
+    animation: fadeUp .6s ease;
+}
+
+body.dark .stat {
+    background: #1e293b;
+}
+
+.stat:hover {
+    transform: translateY(-7px);
+}
+
+.stat-title {
+    color: #64748b;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+body.dark .stat-title {
+    color: #94a3b8;
+}
+
+.stat-number {
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.blue {
+    border-left: 5px solid #3b82f6;
+}
+
+.green {
+    border-left: 5px solid #22c55e;
+}
+
+.orange {
+    border-left: 5px solid #f59e0b;
+}
+
+.red {
+    border-left: 5px solid #ef4444;
+}
+
+.section-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+}
+
+.create {
+    background: linear-gradient(135deg,#2563eb,#4f46e5);
+    color: white;
+}
+
+.jobs {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 20px;
+}
+
+.job {
+    background: white;
+    border-radius: 18px;
+    padding: 23px;
+
+    box-shadow: 0 8px 25px rgba(15,23,42,.08);
+
+    transition: .3s;
+    animation: fadeUp .7s ease;
+}
+
+body.dark .job {
+    background: #1e293b;
+}
+
+.job:hover {
+    transform: translateY(-7px);
+    box-shadow: 0 15px 35px rgba(15,23,42,.15);
+}
+
+.job h3 {
+    font-size: 21px;
+    margin-bottom: 10px;
+}
+
+.description {
+    color: #64748b;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+body.dark .description {
+    color: #94a3b8;
+}
+
+.skills {
+    background: #eff6ff;
+    color: #1d4ed8;
+    border-radius: 10px;
+    padding: 11px;
+    margin-bottom: 18px;
+    font-size: 14px;
+}
+
+body.dark .skills {
+    background: #172554;
+    color: #bfdbfe;
+}
+
+.actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.results {
+    background: #2563eb;
+    color: white;
+}
+
+.applications {
+    background: #16a34a;
+    color: white;
+}
+
+.empty {
+    background: white;
+    border-radius: 18px;
+    padding: 50px;
+    text-align: center;
+    color: #64748b;
+}
+
+body.dark .empty {
+    background: #1e293b;
+    color: #94a3b8;
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeDown {
+    from {
+        opacity: 0;
+        transform: translateY(-15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media(max-width:900px) {
+
+    .stats {
+        grid-template-columns: repeat(2,1fr);
+    }
+
+    .jobs {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+@media(max-width:600px) {
+
+    .navbar {
+        padding: 14px;
+    }
+
+    .container {
+        padding: 18px;
+    }
+
+    .stats {
+        grid-template-columns: 1fr;
+    }
+
+    .welcome h1 {
+        font-size: 24px;
+    }
+
+    .logo {
+        font-size: 17px;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<nav class="navbar">
+
+    <div class="logo">
+        🤖 AI Resume Screening
+    </div>
+
+    <div class="nav-right">
+
+        <span>
+            👤 {{ hr_name }} ({{ hr_id }})
+        </span>
+
+        <button class="btn dark-btn" onclick="toggleDark()">
+            🌙
+        </button>
+
+        <a href="{{ url_for('logout') }}" class="btn logout">
+            Logout
+        </a>
+
+    </div>
+
+</nav>
+
+<div class="container">
+
+    <div class="welcome">
+
+        <h1>HR Dashboard</h1>
+
+        <p class="muted">
+            Welcome, {{ hr_name }} | HR ID: {{ hr_id }}
+        </p>
+
+    </div>
+
+    <div class="stats">
+
+        <div class="stat blue">
+            <div class="stat-title">Total Resumes</div>
+            <div class="stat-number">{{ total_candidates }}</div>
+        </div>
+
+        <div class="stat green">
+            <div class="stat-title">Shortlisted</div>
+            <div class="stat-number">{{ shortlisted }}</div>
+        </div>
+
+        <div class="stat orange">
+            <div class="stat-title">Under Review</div>
+            <div class="stat-number">{{ review }}</div>
+        </div>
+
+        <div class="stat red">
+            <div class="stat-title">Not Matching</div>
+            <div class="stat-number">{{ not_matching }}</div>
+        </div>
+
+    </div>
+
+    <div class="section-title">
+
+        <h2>💼 My Jobs</h2>
+
+        <a href="{{ url_for('create_job') }}" class="btn create">
+            + Create New Job
+        </a>
+
+    </div>
+
+    {% if jobs %}
+
+    <div class="jobs">
+
+        {% for job in jobs %}
+
+        <div class="job">
+
+            <h3>{{ job["title"] }}</h3>
+
+            <div class="description">
+                {{ job["description"] }}
+            </div>
+
+            {% if job["skills"] %}
+
+            <div class="skills">
+                <strong>Required Skills:</strong>
+                {{ job["skills"] }}
+            </div>
+
+            {% endif %}
+
+            <div class="actions">
+
+                <a
+                    href="{{ url_for('results', job_id=job['id']) }}"
+                    class="btn results"
+                >
+                    📊 View Results
+                </a>
+
+                <a
+                    href="{{ url_for('hr_applications', job_id=job['id']) }}"
+                    class="btn applications"
+                >
+                    👥 View Applications
+                </a>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+    {% else %}
+
+    <div class="empty">
+
+        <h2>No jobs created yet.</h2>
+
+        <p>Create your first job to start screening resumes.</p>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+<script>
+
+function toggleDark() {
+
+    document.body.classList.toggle("dark");
+
+    if (document.body.classList.contains("dark")) {
+
+        localStorage.setItem("theme","dark");
+
+    } else {
+
+        localStorage.setItem("theme","light");
+
+    }
+
+}
+
+if (localStorage.getItem("theme") === "dark") {
+
+    document.body.classList.add("dark");
+
+}
+
+</script>
+
+</body>
+
+</html>

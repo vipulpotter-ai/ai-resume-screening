@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>My Applications</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="navbar">
+
+    <h2>AI Resume Screening</h2>
+
+    <div>
+
+        <a href="/candidate/dashboard">
+            Jobs
+        </a>
+
+        &nbsp;&nbsp;
+
+        <a href="/candidate/logout">
+            Logout
+        </a>
+
+    </div>
+
+</div>
+
+
+<div class="dashboard">
+
+    <h1>My Applications</h1>
+
+    <p>
+        Welcome, {{ candidate_name }}
+    </p>
+
+
+    <div class="section">
+
+        {% if applications %}
+
+        <div class="table-container">
+
+            <table>
+
+                <tr>
+
+                    <th>Job</th>
+
+                    <th>Applied Date</th>
+
+                    <th>Status</th>
+
+                    <th>Resume</th>
+
+                </tr>
+
+
+                {% for application in applications %}
+
+                <tr>
+
+                    <td>
+
+                        <b>
+                            {{ application["job_title"] }}
+                        </b>
+
+                    </td>
+
+
+                    <td>
+
+                        {{ application["applied_at"] }}
+
+                    </td>
+
+
+                    <td>
+
+                        {% if application["status"] == "Selected" %}
+
+                            <span class="status green-text">
+                                Selected
+                            </span>
+
+                        {% elif application["status"] == "Not Selected" %}
+
+                            <span class="status red-text">
+                                Not Selected
+                            </span>
+
+                        {% else %}
+
+                            <span class="status yellow-text">
+                                Under Review
+                            </span>
+
+                        {% endif %}
+
+                    </td>
+
+
+                    <td>
+
+                        Submitted ✓
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </table>
+
+        </div>
+
+        {% else %}
+
+            <div class="empty">
+
+                You have not applied for any job yet.
+
+                <br><br>
+
+                <a class="button"
+                   href="/candidate/dashboard">
+
+                    Browse Jobs
+
+                </a>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

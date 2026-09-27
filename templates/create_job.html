@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Job</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+            margin: 0;
+        }
+
+        .header {
+            background: #1f2937;
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            margin: 0;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 800px;
+            margin: 30px auto;
+        }
+
+        .box {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+
+        label {
+            display: block;
+            margin-top: 18px;
+            margin-bottom: 7px;
+            font-weight: bold;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 15px;
+        }
+
+        textarea {
+            min-height: 130px;
+            resize: vertical;
+        }
+
+        .button {
+            margin-top: 25px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 12px 22px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .button:hover {
+            background: #1d4ed8;
+        }
+
+        .back {
+            display: inline-block;
+            margin-top: 15px;
+            text-decoration: none;
+            color: #555;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="header">
+
+    <h1>Create New Job</h1>
+
+    <a href="/dashboard" style="color:white;">
+        Dashboard
+    </a>
+
+</div>
+
+
+<div class="container">
+
+    <div class="box">
+
+        <h2>Job Details</h2>
+
+        <form method="POST">
+
+            <label>Job Title</label>
+
+            <input
+                type="text"
+                name="title"
+                placeholder="Example: Python Developer"
+                required
+            >
+
+
+            <label>Required Skills</label>
+
+            <input
+                type="text"
+                name="skills"
+                placeholder="Example: Python, Flask, SQL, Machine Learning"
+                required
+            >
+
+
+            <label>Job Description</label>
+
+            <textarea
+                name="description"
+                placeholder="Enter complete job description..."
+                required
+            ></textarea>
+
+
+            <button
+                type="submit"
+                class="button"
+            >
+                Create Job
+            </button>
+
+        </form>
+
+
+        <br>
+
+        <a
+            href="/dashboard"
+            class="back"
+        >
+            ← Back to Dashboard
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+</html>

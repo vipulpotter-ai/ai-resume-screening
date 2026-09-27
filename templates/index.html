@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>AI Resume Screening & Skill Matching System</title>
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            min-height: 100vh;
+
+            font-family: "Inter", sans-serif;
+
+            color: white;
+
+            background:
+                radial-gradient(
+                    circle at 15% 20%,
+                    rgba(108,99,255,0.28),
+                    transparent 32%
+                ),
+                radial-gradient(
+                    circle at 85% 80%,
+                    rgba(0,212,255,0.20),
+                    transparent 32%
+                ),
+                linear-gradient(
+                    135deg,
+                    #050b16,
+                    #0d1830
+                );
+
+            overflow-x: hidden;
+
+            position: relative;
+        }
+
+
+        /* Background glow */
+
+        body::before,
+        body::after {
+
+            content: "";
+
+            position: fixed;
+
+            width: 350px;
+            height: 350px;
+
+            border-radius: 50%;
+
+            filter: blur(90px);
+
+            opacity: 0.28;
+
+            pointer-events: none;
+
+            animation:
+                glowMove 9s
+                ease-in-out infinite
+                alternate;
+        }
+
+
+        body::before {
+
+            background: #6c63ff;
+
+            top: -160px;
+            left: -120px;
+        }
+
+
+        body::after {
+
+            background: #00d4ff;
+
+            right: -130px;
+            bottom: -150px;
+
+            animation-delay: 2s;
+        }
+
+
+        @keyframes glowMove {
+
+            from {
+                transform: translate(0,0) scale(1);
+            }
+
+            to {
+                transform: translate(55px,35px) scale(1.15);
+            }
+
+        }
+
+
+        /* Particles */
+
+        .particle {
+
+            position: fixed;
+
+            width: 4px;
+            height: 4px;
+
+            border-radius: 50%;
+
+            background: rgba(255,255,255,0.5);
+
+            pointer-events: none;
+
+            animation:
+                floatParticle
+                linear infinite;
+        }
+
+
+        .p1 {
+            left: 10%;
+            bottom: 15%;
+            animation-duration: 8s;
+        }
+
+
+        .p2 {
+            left: 25%;
+            bottom: 5%;
+            animation-duration: 11s;
+        }
+
+
+        .p3 {
+            left: 70%;
+            bottom: 20%;
+            animation-duration: 9s;
+        }
+
+
+        .p4 {
+            left: 88%;
+            bottom: 10%;
+            animation-duration: 7s;
+        }
+
+
+        @keyframes floatParticle {
+
+            0% {
+
+                transform:
+                    translateY(0);
+
+                opacity: 0;
+            }
+
+            30% {
+                opacity: 0.7;
+            }
+
+            100% {
+
+                transform:
+                    translateY(-180px);
+
+                opacity: 0;
+            }
+
+        }
+
+
+        /* Navbar */
+
+        .navbar {
+
+            width: 100%;
+
+            padding:
+                22px 6%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            position: relative;
+
+            z-index: 5;
+
+            border-bottom:
+                1px solid
+                rgba(255,255,255,0.07);
+        }
+
+
+        .logo {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            font-size: 17px;
+
+            font-weight: 800;
+        }
+
+
+        .logo-icon {
+
+            width: 42px;
+            height: 42px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 12px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #6c63ff,
+                    #00c8ed
+                );
+
+            box-shadow:
+                0 8px 25px
+                rgba(108,99,255,0.35);
+
+            font-size: 21px;
+        }
+
+
+        .system-status {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            color: #aab6cc;
+
+            font-size: 12px;
+        }
+
+
+        .status-dot {
+
+            width: 8px;
+            height: 8px;
+
+            border-radius: 50%;
+
+            background: #39e58c;
+
+            box-shadow:
+                0 0 12px
+                rgba(57,229,140,0.8);
+
+            animation:
+                pulse 2s
+                infinite;
+        }
+
+
+        @keyframes pulse {
+
+            0%,100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.45;
+            }
+
+        }
+
+
+        /* Hero */
+
+        .hero {
+
+            min-height:
+                calc(100vh - 87px);
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            justify-content: center;
+
+            text-align: center;
+
+            padding:
+                70px 20px;
+
+            position: relative;
+
+            z-index: 2;
+        }
+
+
+        .ai-badge {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            padding:
+                9px 16px;
+
+            border-radius: 30px;
+
+            background:
+                rgba(108,99,255,0.12);
+
+            border:
+                1px solid
+                rgba(108,99,255,0.25);
+
+            color: #b8b3ff;
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            letter-spacing: 0.5px;
+
+            margin-bottom: 25px;
+
+            animation:
+                fadeDown 0.7s
+                ease-out;
+        }
+
+
+        .hero h1 {
+
+            max-width: 900px;
+
+            font-size:
+                clamp(38px, 6vw, 72px);
+
+            line-height: 1.05;
+
+            font-weight: 800;
+
+            letter-spacing: -2px;
+
+            animation:
+                fadeUp 0.8s
+                ease-out;
+        }
+
+
+        .gradient-text {
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #8d87ff,
+                    #4ce0ff
+                );
+
+            -webkit-background-clip: text;
+
+            -webkit-text-fill-color: transparent;
+        }
+
+
+        .hero-description {
+
+            max-width: 680px;
+
+            margin-top: 22px;
+
+            color: #aab6cc;
+
+            font-size: 15px;
+
+            line-height: 1.8;
+
+            animation:
+                fadeUp 1s
+                ease-out;
+        }
+
+
+        @keyframes fadeDown {
+
+            from {
+
+                opacity: 0;
+
+                transform:
+                    translateY(-15px);
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform:
+                    translateY(0);
+            }
+
+        }
+
+
+        @keyframes fadeUp {
+
+            from {
+
+                opacity: 0;
+
+                transform:
+                    translateY(25px);
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform:
+                    translateY(0);
+            }
+
+        }
+
+
+        /* Portal cards */
+
+        .portal-grid {
+
+            width: 100%;
+
+            max-width: 1050px;
+
+            margin-top: 48px;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 18px;
+
+            animation:
+                cardsEnter 1.1s
+                ease-out;
+        }
+
+
+        @keyframes cardsEnter {
+
+            from {
+
+                opacity: 0;
+
+                transform:
+                    translateY(35px);
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform:
+                    translateY(0);
+            }
+
+        }
+
+
+        .portal-card {
+
+            min-height: 190px;
+
+            padding: 25px 20px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            justify-content: center;
+
+            text-decoration: none;
+
+            color: white;
+
+            border-radius: 20px;
+
+            background:
+                rgba(255,255,255,0.07);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.12);
+
+            backdrop-filter:
+                blur(18px);
+
+            -webkit-backdrop-filter:
+                blur(18px);
+
+            box-shadow:
+                0 15px 40px
+                rgba(0,0,0,0.20);
+
+            transition:
+                transform 0.3s ease,
+                border-color 0.3s ease,
+                background 0.3s ease,
+                box-shadow 0.3s ease;
+        }
+
+
+        .portal-card:hover {
+
+            transform:
+                translateY(-10px);
+
+            background:
+                rgba(255,255,255,0.11);
+
+            border-color:
+                rgba(108,99,255,0.5);
+
+            box-shadow:
+                0 25px 55px
+                rgba(0,0,0,0.35);
+        }
+
+
+        .portal-icon {
+
+            width: 65px;
+            height: 65px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 18px;
+
+            font-size: 29px;
+
+            margin-bottom: 17px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(108,99,255,0.85),
+                    rgba(0,212,255,0.65)
+                );
+
+            box-shadow:
+                0 10px 25px
+                rgba(108,99,255,0.20);
+
+            transition:
+                transform 0.3s ease;
+        }
+
+
+        .portal-card:hover .portal-icon {
+
+            transform:
+                scale(1.08)
+                rotate(-3deg);
+        }
+
+
+        .portal-card h3 {
+
+            font-size: 16px;
+
+            margin-bottom: 7px;
+        }
+
+
+        .portal-card p {
+
+            color: #8f9db3;
+
+            font-size: 11px;
+
+            line-height: 1.5;
+        }
+
+
+        /* Bottom info */
+
+        .features-row {
+
+            margin-top: 42px;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            flex-wrap: wrap;
+
+            gap: 25px;
+
+            color: #7f8ca3;
+
+            font-size: 11px;
+        }
+
+
+        .feature-item {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 7px;
+        }
+
+
+        .feature-item span {
+
+            color: #78dfff;
+        }
+
+
+        /* Footer */
+
+        .footer {
+
+            position: absolute;
+
+            bottom: 18px;
+
+            width: 100%;
+
+            text-align: center;
+
+            color: #5f6c82;
+
+            font-size: 10px;
+
+            z-index: 3;
+        }
+
+
+        /* Responsive */
+
+        @media (max-width: 900px) {
+
+            .portal-grid {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+                max-width: 650px;
+            }
+
+            .hero {
+                padding-bottom: 90px;
+            }
+
+        }
+
+
+        @media (max-width: 550px) {
+
+            .navbar {
+
+                padding:
+                    18px 20px;
+            }
+
+            .logo {
+
+                font-size: 14px;
+            }
+
+            .system-status {
+                display: none;
+            }
+
+            .hero {
+
+                min-height: auto;
+
+                padding:
+                    60px 18px
+                    90px;
+            }
+
+            .hero h1 {
+
+                letter-spacing:
+                    -1px;
+            }
+
+            .hero-description {
+
+                font-size: 13px;
+            }
+
+            .portal-grid {
+
+                grid-template-columns: 1fr;
+
+                max-width: 360px;
+
+                gap: 14px;
+            }
+
+            .portal-card {
+
+                min-height: 150px;
+            }
+
+            .features-row {
+
+                flex-direction: column;
+
+                gap: 12px;
+            }
+
+            .footer {
+                position: relative;
+                bottom: auto;
+                padding-bottom: 18px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- Floating particles -->
+
+    <div class="particle p1"></div>
+    <div class="particle p2"></div>
+    <div class="particle p3"></div>
+    <div class="particle p4"></div>
+
+
+    <!-- Navbar -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                🤖
+            </div>
+
+            <span>
+                AI Resume Screening
+            </span>
+
+        </div>
+
+
+        <div class="system-status">
+
+            <div class="status-dot"></div>
+
+            System Online
+
+        </div>
+
+    </nav>
+
+
+    <!-- Main -->
+
+    <main class="hero">
+
+
+        <div class="ai-badge">
+
+            ✨ AI-POWERED RECRUITMENT PLATFORM
+
+        </div>
+
+
+        <h1>
+
+            AI Resume Screening
+
+            <br>
+
+            <span class="gradient-text">
+                & Skill Matching System
+            </span>
+
+        </h1>
+
+
+        <p class="hero-description">
+
+            A smart recruitment platform that connects
+            candidates with opportunities and helps HR
+            teams screen resumes using AI-powered
+            skill matching and NLP technology.
+
+        </p>
+
+
+        <!-- Four portals -->
+
+        <div class="portal-grid">
+
+
+            <!-- Admin -->
+
+            <a
+                href="/admin/login"
+                class="portal-card">
+
+                <div class="portal-icon">
+                    👨‍💼
+                </div>
+
+                <h3>
+                    Admin Login
+                </h3>
+
+                <p>
+                    Manage HR accounts and system
+                </p>
+
+            </a>
+
+
+            <!-- HR -->
+
+            <a
+                href="/hr/login"
+                class="portal-card">
+
+                <div class="portal-icon">
+                    🏢
+                </div>
+
+                <h3>
+                    HR Login
+                </h3>
+
+                <p>
+                    Manage jobs and applications
+                </p>
+
+            </a>
+
+
+            <!-- Candidate Login -->
+
+            <a
+                href="/candidate/login"
+                class="portal-card">
+
+                <div class="portal-icon">
+                    👤
+                </div>
+
+                <h3>
+                    Candidate Login
+                </h3>
+
+                <p>
+                    Apply for jobs and track status
+                </p>
+
+            </a>
+
+
+            <!-- Candidate Register -->
+
+            <a
+                href="/candidate/register"
+                class="portal-card">
+
+                <div class="portal-icon">
+                    🚀
+                </div>
+
+                <h3>
+                    Candidate Register
+                </h3>
+
+                <p>
+                    Create a new candidate account
+                </p>
+
+            </a>
+
+
+        </div>
+
+
+        <!-- Features -->
+
+        <div class="features-row">
+
+            <div class="feature-item">
+                🤖 <span>AI Skill Matching</span>
+            </div>
+
+            <div class="feature-item">
+                📄 <span>Resume Screening</span>
+            </div>
+
+            <div class="feature-item">
+                🎯 <span>Smart Recruitment</span>
+            </div>
+
+            <div class="feature-item">
+                🔒 <span>Secure Access</span>
+            </div>
+
+        </div>
+
+
+    </main>
+
+
+    <div class="footer">
+
+        © 2026 AI Resume Screening & Skill Matching System
+        • College Major Project
+
+    </div>
+
+
+</body>
+
+</html>

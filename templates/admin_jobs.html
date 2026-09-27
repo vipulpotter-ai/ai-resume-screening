@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>All Jobs - Admin</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            background: #1f2937;
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            margin: 0;
+        }
+
+        .button {
+            display: inline-block;
+            background: #2563eb;
+            color: white;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 6px;
+        }
+
+        .button:hover {
+            background: #1d4ed8;
+        }
+
+        .container {
+            width: 95%;
+            margin: 25px auto;
+        }
+
+        .section {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th,
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+            text-align: center;
+        }
+
+        th {
+            background: #1f2937;
+            color: white;
+        }
+
+        tr:hover {
+            background: #f5f5f5;
+        }
+
+        .active {
+            color: green;
+            font-weight: bold;
+        }
+
+        .inactive {
+            color: red;
+            font-weight: bold;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 30px;
+            color: #777;
+        }
+
+        .description {
+            max-width: 350px;
+            margin: auto;
+            white-space: normal;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="header">
+
+    <h1>All Jobs</h1>
+
+    <a
+        class="button"
+        href="/admin/dashboard"
+    >
+        ← Admin Dashboard
+    </a>
+
+</div>
+
+
+<div class="container">
+
+    <div class="section">
+
+        <h2>All HR Jobs</h2>
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>Job ID</th>
+                    <th>Job Title</th>
+                    <th>Required Skills</th>
+                    <th>Description</th>
+                    <th>HR ID</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+            {% for job in jobs %}
+
+                <tr>
+
+                    <td>
+                        {{ job.id }}
+                    </td>
+
+                    <td>
+                        <strong>
+                            {{ job.title }}
+                        </strong>
+                    </td>
+
+                    <td>
+                        {{ job.skills or "Not specified" }}
+                    </td>
+
+                    <td class="description">
+                        {{ job.description or "No description" }}
+                    </td>
+
+                    <td>
+                        {{ job.hr_id or "Not Assigned" }}
+                    </td>
+
+                </tr>
+
+            {% else %}
+
+                <tr>
+
+                    <td
+                        colspan="5"
+                        class="empty"
+                    >
+                        No jobs available.
+                    </td>
+
+                </tr>
+
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+</body>
+</html>
